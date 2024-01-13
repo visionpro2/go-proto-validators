@@ -576,14 +576,15 @@ func (p *plugin) generateStringValidator(variableName string, ccTypeName string,
 		p.P(`}`)
 	}
 	if fv.FilterContain != nil {
-		p.P(`fields := strings.Split("`, fv.FilterContain, `", ",")`)
+		p.P(`fields := strings.Split("`, fv.GetFilterContain(), `", ",")`)
 		p.P(`for _, field := range fields {`)
-		p.P(`if !strings.Contains(`, variableName, ` field + "=") {`)
+		p.P(`    if !strings.Contains(`, variableName, `, field + "=") {`)
 		p.In()
 		errorStr := "invalid argument"
-		p.generateErrorString(variableName, fieldName, errorStr, fv)
+		fv.HumanError = &errorStr
+		p.generateErrorString(variableName, fieldName, "", fv)
 		p.Out()
-		p.P(`}`)
+		p.P(`    }`)
 		p.P(`}`)
 	}
 	p.generateLengthValidator(variableName, ccTypeName, fieldName, fv)
