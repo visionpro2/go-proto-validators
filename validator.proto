@@ -72,6 +72,8 @@ message FieldValidator {
   // uuid_ver specifies the valid UUID versions. Valid values are: 0-5.
   // If uuid_ver is 0 all UUID versions are accepted.
   optional int32 uuid_ver = 18;
+  // filter contain
+  optional string filter_contain = 19;
 }
 
 message OneofValidator {
